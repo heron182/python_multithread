@@ -7,16 +7,17 @@ from urllib.request import Request, urlopen
 
 logger = logging.getLogger(__name__)
 
-CLIENT_ID = ''
+CLIENT_ID = open('secret').readline()[:-1]
 
 
 class DownloadWorker(threading.Thread):
     def __init__(self, queue):
-        super().__init__(self)
         self.queue = queue
+        super().__init__()
 
     def run(self):
-        logger.info('Starting worker %s ' % threading.currentThread().getName())
+        logger.info('Starting worker %s ' %
+                    threading.currentThread().getName())
         while True:
             download_dir, link = self.queue.get()
             download_link(download_dir, link)
